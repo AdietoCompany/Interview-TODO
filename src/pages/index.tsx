@@ -17,26 +17,6 @@ export default function Home() {
   // Načítání dat
   // const hello = api.post.hello.useQuery({ text: "from tRPC" });
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [newTodo, setNewTodo] = useState("");
-
-  const addTodo = () => {
-    if (newTodo.trim() !== "") {
-      setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
-      setNewTodo("");
-    }
-  };
-
-  const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-      ),
-    );
-  };
-
-  const removeTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
 
   return (
     <>
@@ -55,7 +35,7 @@ export default function Home() {
               placeholder="Add a new todo"
               className="mr-2 flex-grow"
             />
-            <Button onClick={addTodo}>Add</Button>
+            <Button>Add</Button>
           </div>
           <ul className="space-y-2">
             {todos.map((todo) => (
@@ -67,7 +47,6 @@ export default function Home() {
                   <Checkbox
                     id={`todo-${todo.id}`}
                     checked={todo.completed}
-                    onCheckedChange={() => toggleTodo(todo.id)}
                     className="mr-2"
                   />
                   <label
@@ -80,7 +59,6 @@ export default function Home() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => removeTodo(todo.id)}
                   className="text-red-500 hover:text-red-700"
                 >
                   <TrashIcon className="h-4 w-4" />
